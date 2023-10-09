@@ -1,0 +1,71 @@
+.nav {
+    height: 55px;
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: inset 0px 50px 10px rgba(0, 0, 0, 0.5);
+}
+
+.netflix-logo {
+    height: 45px;
+    margin-right: 1rem;
+}
+
+.right-section {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.right-section button, .left-side button {
+    font-size: 1rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+.left-side {
+    display: flex;
+    gap: 30px;
+}
+
+.notifications-btn {
+    position: relative;
+}
+
+.notifications-btn svg {
+    transform: scale(1.4);
+}
+
+.notifications-btn::after {
+    content: '9+';
+    padding: 1px 3px;
+    background-color: rgb(222, 0, 0);
+    border-radius: 10px;
+    position: absolute;
+    font-size: 13px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    top: 8px;
+    right: -12px;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.profile-btn img {
+    height: 30px;
+}
+
+.profile-btn svg {
+    height: 10px;
+}

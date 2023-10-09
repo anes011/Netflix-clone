@@ -1,0 +1,83 @@
+.display {
+    border: 1px solid;
+    height: 700px;
+    background: url('https://wallpapercave.com/wp/wp6581266.jpg') no-repeat;
+    background-size: 100%;
+    background-position: top;
+    padding-inline: 6rem;
+}
+
+.movie-title {
+    color: #fff;
+    font-size: 4rem;
+    font-weight: 600;
+    width: 250px;
+    margin-top: 12rem;
+}
+
+.buttons-container {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.buttons-container button {
+    display: flex;
+    padding: 9px 30px;
+    font-size: 1rem;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(65, 65, 65, 0.5);
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.play-btn svg, .mylist-btn svg {
+    transform: scale(2);
+}
+
+.description-container {
+    color: #fff;
+    font-size: 1.2rem;
+    width: 700px;
+    line-height: 30px;
+    margin-top: 2rem;
+}
+
+.slider {
+    height: 170px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    gap: 2px;
+}
+
+.prev-btn, .next-btn {
+    height: 100%;
+    position: absolute;
+    width: 60px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.prev-btn svg {
+    transform: scale(2.6) rotate(180deg);
+}
+
+.next-btn {
+    right: 0;
+}
+
+.next-btn svg {
+    transform: scale(2.6);
+}
+
+.movie {
+    height: 100%;
+    width: 300px;
+}
