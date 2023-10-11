@@ -1,3 +1,8 @@
+.movies {
+    overflow-x: hidden;
+    height: 100vh;
+}
+
 .display {
     border: 1px solid;
     height: 700px;
@@ -5,6 +10,8 @@
     background-size: 100%;
     background-position: top;
     padding-inline: 6rem;
+    overflow: hidden;
+    transition: all .3s ease;
 }
 
 .movie-title {
@@ -13,6 +20,7 @@
     font-weight: 600;
     width: 250px;
     margin-top: 12rem;
+    transition: all .3s ease;
 }
 
 .buttons-container {
@@ -45,6 +53,7 @@
     width: 700px;
     line-height: 30px;
     margin-top: 2rem;
+    transition: all .3s ease;
 }
 
 .slider {
@@ -52,7 +61,14 @@
     position: relative;
     display: flex;
     overflow: hidden;
-    gap: 2px;
+    gap: 4px;
+}
+
+.slider-active {
+    height: 170px;
+    position: relative;
+    display: flex;
+    gap: 4px;
 }
 
 .prev-btn, .next-btn {
@@ -63,6 +79,10 @@
     border: none;
     cursor: pointer;
     z-index: 2;
+}
+
+.prev-btn {
+    display: none;
 }
 
 .prev-btn svg {
@@ -77,7 +97,27 @@
     transform: scale(2.6);
 }
 
-.movie {
+.movie-btn {
     height: 100%;
     width: 300px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: all .3s ease;
+}
+
+.movie-btn-active {
+    position: absolute;
+}
+
+.movie-btn:focus {
+    /*transform: scale(1.4);*/
+    height: 230px;
+    margin-top: -30px;
+    margin-right: 6.7rem;
+    z-index: 3;
+}
+
+.movie-btn img {
+    height: 100%;
 }

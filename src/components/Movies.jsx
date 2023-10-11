@@ -1,10 +1,21 @@
 import '../styles/movies.css';
-import movie from '../images & logos/wallpapersden.com_house-of-the-dragon-cool-season-1-poster-hd_3840x2160.jpg';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function Movies() {
 
+    const movieBtn = document.querySelectorAll('.movie-btn');
+
+    let transform = 0;
+
+    const displayImage = useRef(null);
+    const movieTitle = useRef(null);
+    const movieDescription = useRef(null);
+    const nextBtn = useRef(null);
+    const previousBtn = useRef(null);
+
     const [apiData, setApiData] = useState([]);
+    const [sliderOverflow, setSliderOverflow] = useState(false);
+    const [apiReady, setApiReady] = useState(false);
 
     useEffect(() => {
         const options = {
@@ -18,20 +29,72 @@ function Movies() {
           fetch('https://api.themoviedb.org/3/tv/popular', options)
             .then(response => response.json())
             .then((response) => {
-                console.log(response);
                 setApiData(response.results);
+                setApiReady(true);
             })
     }, [])
 
     const handleMatch = (id) => {
-        const target = apiData.find((t) => t.id === id);
-        console.log(target);
+        if (apiReady) {
+            const target = apiData.find((t) => t.id === id);
+            displayImage.current.style.opacity = '0';
+            setTimeout(() => {
+                displayImage.current.style.background = `url('https://image.tmdb.org/t/p/w185${target.backdrop_path}') no-repeat`;
+                displayImage.current.style.backgroundSize = '100%';
+                displayImage.current.style.backgroundPosition = 'center';
+                displayImage.current.style.opacity = '1';
+            }, 300);
+            movieTitle.current.style.opacity = '0';
+            setTimeout(() => {
+                movieTitle.current.textContent = `${target.name}`;
+                movieTitle.current.style.opacity = '1';
+            }, 300);
+            movieDescription.current.style.opacity = '0';
+            if (target.overview === '') {
+                setTimeout(() => {
+                    movieDescription.current.textContent = `No description...`;
+                    movieDescription.current.style.opacity = '1';
+                }, 300);
+            }else {
+                setTimeout(() => {
+                    movieDescription.current.textContent = `${target.overview}`;
+                    movieDescription.current.style.opacity = '1';
+                }, 300);
+            }
+            setSliderOverflow(true);
+        }
+    }
+
+    const handleNext = () => {
+        if (transform > -1300) {
+            transform += -100;
+        }else {
+            transform += -100;
+            nextBtn.current.style.display = 'none';
+        }
+        previousBtn.current.style.display = 'block';
+        movieBtn.forEach((btn) => {
+            btn.style.transform = `translateX(${transform}%)`;
+        })
+    }
+
+    const handlePrevious = () => {
+        if (transform < -100) {
+            transform += 100;
+        }else {
+            transform += 100;
+            previousBtn.current.style.display = 'none';
+        }
+        nextBtn.current.style.display = 'block';
+        movieBtn.forEach((btn) => {
+            btn.style.transform = `translateX(${transform}%)`;
+        })
     }
 
     return(
         <div className="movies">
-            <div className="display">
-                <div className="movie-title">MONEY HEIST</div>
+            <div ref={displayImage} className="display">
+                <div ref={movieTitle} className="movie-title">MONEY HEIST</div>
                 <div className="buttons-container">
                     <button className="play-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
@@ -46,19 +109,21 @@ function Movies() {
                         <p>My List</p>
                     </button>
                 </div>
-                <div className="description-container">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab fugiat dolorum recusandae temporibus voluptate corporis, totam aliquam consequatur. Ducimus autem nesciunt cum officia libero architecto modi mollitia, fugiat at laudantium.</div>
+                <div ref={movieDescription} className="description-container">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab fugiat dolorum recusandae temporibus voluptate corporis, totam aliquam consequatur. Ducimus autem nesciunt cum officia libero architecto modi mollitia, fugiat at laudantium.</div>
             </div>
-            <div className="slider">
-                <button className="prev-btn">
+            <div className={sliderOverflow ? "slider-active" : "slider"}>
+                <button ref={previousBtn} className="prev-btn" onClick={handlePrevious}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
                 </button>
-                <button className="next-btn">
+                <button ref={nextBtn} className="next-btn" onClick={handleNext}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
                 </button>
 
                 {
                     apiData.map((x) => (
-                        <img onClick={() => handleMatch(x.id)} className='movie' src={`https://image.tmdb.org/t/p/w185${x.backdrop_path}`} alt={x.name} />
+                        <button onClick={() => handleMatch(x.id)} className="movie-btn">
+                            <img src={`https://image.tmdb.org/t/p/w185${x.backdrop_path}`} alt={x.name} />
+                        </button>
                     ))
                 }
             </div>
