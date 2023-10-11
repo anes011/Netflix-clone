@@ -1,7 +1,33 @@
 import '../styles/movies.css';
 import movie from '../images & logos/wallpapersden.com_house-of-the-dragon-cool-season-1-poster-hd_3840x2160.jpg';
+import { useEffect, useState } from 'react';
 
 function Movies() {
+
+    const [apiData, setApiData] = useState([]);
+
+    useEffect(() => {
+        const options = {
+            method: 'GET',
+            headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNmIyY2NmMjI4NDQ0ODhjODZiZWNhZDcwMWUxYjA3MyIsInN1YiI6IjY1MjU2ZTljZDM5OWU2MDBlMzYzOTMzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GosODVNNRnpI0fhbwnCyql3eDr46YYI1_1KX6KtEuYg'
+            }
+          };
+          
+          fetch('https://api.themoviedb.org/3/tv/popular', options)
+            .then(response => response.json())
+            .then((response) => {
+                console.log(response);
+                setApiData(response.results);
+            })
+    }, [])
+
+    const handleMatch = (id) => {
+        const target = apiData.find((t) => t.id === id);
+        console.log(target);
+    }
+
     return(
         <div className="movies">
             <div className="display">
@@ -30,13 +56,11 @@ function Movies() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
                 </button>
 
-                <img className='movie' src={movie} alt="" />
-                <img className='movie' src="https://roost.nbcuni.com/bin/viewasset.html/content/dam/Peacock/Campaign/landingpages/library/theoffice/mainpage/office-social-min.png/_jcr_content/renditions/original" alt="" />
-                <img className='movie' src="https://ntvb.tmsimg.com/assets/p8696131_b_h10_aa.jpg?w=960&h=540" alt="" />
-                <img className='movie' src="https://i.ytimg.com/vi/5maXvZ5fyQY/maxresdefault.jpg" alt="" />
-                <img className='movie' src="https://viciados.net/wp-content/uploads/2023/01/The-Last-Of-Us-HBO-Max-Serie-2023.webp" alt="" />
-                <img className='movie' src="https://imgnew.outlookindia.com/uploadimage/library/16_9/16_9_5/IMAGE_1687182585.jpg" alt="" />
-                <img className='movie' src="https://movies.universalpictures.com/media/06-opp-dm-mobile-banner-1080x745-now-pl-f01-071223-64bab982784c7-1.jpg" alt="" />
+                {
+                    apiData.map((x) => (
+                        <img onClick={() => handleMatch(x.id)} className='movie' src={`https://image.tmdb.org/t/p/w185${x.backdrop_path}`} alt={x.name} />
+                    ))
+                }
             </div>
         </div>
     )
