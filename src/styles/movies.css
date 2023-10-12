@@ -12,6 +12,10 @@
     padding-inline: 6rem;
     overflow: hidden;
     transition: all .3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .movie-title {
@@ -111,7 +115,6 @@
 }
 
 .movie-btn:focus {
-    /*transform: scale(1.4);*/
     height: 230px;
     margin-top: -30px;
     margin-right: 6.7rem;
@@ -120,4 +123,38 @@
 
 .movie-btn img {
     height: 100%;
+}
+
+.type-indicator-container {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    transition: all .3s ease;
+}
+
+.type-indicator-container-raise {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: space-between;
+    transition: all .3s ease;
+}
+
+.indicator-container {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.indicator-container .ind {
+    height: 2px;
+    width: 20px;
+    background-color: rgb(83, 83, 83);
+    position: relative;
 }

@@ -4,18 +4,23 @@ import { useEffect, useRef, useState } from 'react';
 function Movies() {
 
     const movieBtn = document.querySelectorAll('.movie-btn');
+    const indContainer = document.querySelector('.indicator-container');
+    const ind = document.querySelectorAll('.ind');
 
     let transform = 0;
+    let indicator = 0;
 
     const displayImage = useRef(null);
     const movieTitle = useRef(null);
     const movieDescription = useRef(null);
     const nextBtn = useRef(null);
     const previousBtn = useRef(null);
+    const slider = useRef(null);
 
     const [apiData, setApiData] = useState([]);
     const [sliderOverflow, setSliderOverflow] = useState(false);
     const [apiReady, setApiReady] = useState(false);
+    const [raiseIndicator, setRaiseIndicator] = useState(false);
 
     useEffect(() => {
         const options = {
@@ -62,10 +67,40 @@ function Movies() {
                 }, 300);
             }
             setSliderOverflow(true);
+            setRaiseIndicator(true);
         }
     }
 
-    const handleNext = () => {
+    document.addEventListener('click', (e) => {
+        movieBtn.forEach((b) => {
+            if (e.target !== b) {
+                setRaiseIndicator(false);
+            }
+        })
+    })
+
+    const handleSlider = (event) => {
+        event.stopPropagation();
+    }
+
+    const indicatorRight = () => {
+        indicator++;
+        ind.forEach((i) => {
+            i.style.backgroundColor = 'gray';
+        })
+        indContainer.childNodes[indicator].style.backgroundColor = '#fff';
+    }
+
+    const indicatorLeft = () => {
+        indicator--;
+        ind.forEach((i) => {
+            i.style.backgroundColor = 'gray';
+        })
+        indContainer.childNodes[indicator].style.backgroundColor = '#fff';
+    }
+
+    const handleNext = (event) => {
+        event.stopPropagation();
         if (transform > -1300) {
             transform += -100;
         }else {
@@ -76,9 +111,11 @@ function Movies() {
         movieBtn.forEach((btn) => {
             btn.style.transform = `translateX(${transform}%)`;
         })
+        indicatorRight();
     }
 
-    const handlePrevious = () => {
+    const handlePrevious = (event) => {
+        event.stopPropagation();
         if (transform < -100) {
             transform += 100;
         }else {
@@ -89,29 +126,52 @@ function Movies() {
         movieBtn.forEach((btn) => {
             btn.style.transform = `translateX(${transform}%)`;
         })
+        indicatorLeft();
     }
 
     return(
         <div className="movies">
             <div ref={displayImage} className="display">
-                <div ref={movieTitle} className="movie-title">MONEY HEIST</div>
-                <div className="buttons-container">
-                    <button className="play-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
-                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
-                        </svg>
-                        <p>Play</p>
-                    </button>
-                    <button className="mylist-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                        </svg>
-                        <p>My List</p>
-                    </button>
+                <div className="container">
+                    <div ref={movieTitle} className="movie-title">MONEY HEIST</div>
+                    <div className="buttons-container">
+                        <button className="play-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                            </svg>
+                            <p>Play</p>
+                        </button>
+                        <button className="mylist-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            <p>My List</p>
+                        </button>
+                    </div>
+                    <div ref={movieDescription} className="description-container">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab fugiat dolorum recusandae temporibus voluptate corporis, totam aliquam consequatur. Ducimus autem nesciunt cum officia libero architecto modi mollitia, fugiat at laudantium.</div>
                 </div>
-                <div ref={movieDescription} className="description-container">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab fugiat dolorum recusandae temporibus voluptate corporis, totam aliquam consequatur. Ducimus autem nesciunt cum officia libero architecto modi mollitia, fugiat at laudantium.</div>
+                <div className={raiseIndicator ? "type-indicator-container-raise" : "type-indicator-container"}>
+                    <p>Popular</p>
+                    <div className="indicator-container">
+                        <div className="ind" style={{backgroundColor: '#fff'}}></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                        <div className="ind"></div>
+                    </div>
+                </div>
             </div>
-            <div className={sliderOverflow ? "slider-active" : "slider"}>
+            <div ref={slider} className={sliderOverflow ? "slider-active" : "slider"} onClick={handleSlider}>
                 <button ref={previousBtn} className="prev-btn" onClick={handlePrevious}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
                 </button>
