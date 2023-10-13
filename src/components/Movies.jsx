@@ -227,7 +227,7 @@ function Movies() {
                             <p>My List</p>
                         </button>
                     </div>
-                    <div ref={movieDescription} className="description-container">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab fugiat dolorum recusandae temporibus voluptate corporis, totam aliquam consequatur. Ducimus autem nesciunt cum officia libero architecto modi mollitia, fugiat at laudantium.</div>
+                    <div ref={movieDescription} className="description-container">With milions of euros and their lives on the line, nine robbers attempt to pull off the greatest heist of all time.</div>
                 </div>
                 <div className="type-indicator-container">
                     <p>Popular</p>
