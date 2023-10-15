@@ -1,7 +1,11 @@
 import '../styles/movies.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import movieData from '../Context';
 
 function Movies() {
+
+    const { gotU, setGotU } = useContext(movieData);
 
     const movieBtn = document.querySelectorAll('.movie-btn');
     const movieBtnUpcoming = document.querySelectorAll('.movie-btn-upcoming');
@@ -208,6 +212,11 @@ function Movies() {
         })
     };
 
+    const handleTarU = (id) => {
+        const tarU = apiDataUpcoming.find((x) => x.id === id);
+        setGotU(tarU);
+    }
+
     return(
         <div className="movies">
             <div ref={displayImage} className="display">
@@ -278,9 +287,11 @@ function Movies() {
 
                 {
                     apiDataUpcoming.map((u) => (
-                        <button className="movie-btn-upcoming">
-                            <img src={`https://image.tmdb.org/t/p/w185${u.backdrop_path}`} alt={u.title} />
-                        </button>
+                        <Link to='/moviepage'>
+                            <button className="movie-btn-upcoming" onClick={() => handleTarU(u.id)}>
+                                <img src={`https://image.tmdb.org/t/p/w185${u.backdrop_path}`} alt={u.title} />
+                            </button>
+                        </Link>
                     ))
                 }
             </div>

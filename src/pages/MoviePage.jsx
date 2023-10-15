@@ -1,12 +1,25 @@
 import '../styles/moviepage.css';
 import Nav from '../components/Nav';
 import Nlogo from '../images & logos/netflix_logo_icon_170919.png';
+import { useContext, useEffect, useRef } from 'react';
+import movieData from '../Context';
 
 function MoviePage() {
+
+    const { gotU } = useContext(movieData);
+
+    const detailsCont = useRef(null);
+
+    useEffect(() => {
+        detailsCont.current.style.background = `url('https://image.tmdb.org/t/p/w185${gotU.backdrop_path}') no-repeat`;
+        detailsCont.current.style.backgroundSize = '100%';
+        detailsCont.current.style.backgroundPosition = 'center';
+    })
+
     return(
         <div className="movie-page">
             <Nav />
-            <div className="details-container">
+            <div ref={detailsCont} className="details-container">
                 <div className="gradient">
                     <img className='n-logo' src={Nlogo} alt="Netflix N logo" />
                     <h3 className="movie-name">The Silence</h3>
