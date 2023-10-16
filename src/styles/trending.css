@@ -1,0 +1,20 @@
+.movie-btn-trending {
+    height: 100%;
+    width: 213px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: all .3s ease;
+}
+
+.movie-btn-trending img {
+    height: 100%;
+}
+
+.trending {
+    margin-top: 3rem;
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 1rem;
+    margin-left: 5rem;
+}

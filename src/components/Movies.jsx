@@ -1,21 +1,13 @@
 import '../styles/movies.css';
-import { useEffect, useRef, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import movieData from '../Context';
+import { useEffect, useRef, useState } from 'react';
 
 function Movies() {
 
-    const { gotU, setGotU } = useContext(movieData);
-
     const movieBtn = document.querySelectorAll('.movie-btn');
-    const movieBtnUpcoming = document.querySelectorAll('.movie-btn-upcoming');
-    const movieBtnTrending = document.querySelectorAll('.movie-btn-trending');
     const indContainer = document.querySelector('.indicator-container');
     const ind = document.querySelectorAll('.ind');
 
     let transform = 0;
-    let transformUpcoming = 0;
-    let transformTrending = 0;
     let indicator = 0;
 
     const displayImage = useRef(null);
@@ -23,15 +15,9 @@ function Movies() {
     const movieDescription = useRef(null);
     const nextBtn = useRef(null);
     const previousBtn = useRef(null);
-    const previousBtnUpcoming = useRef(null);
-    const nextBtnUpcoming = useRef(null);
-    const previousBtnTrending = useRef(null);
-    const nextBtnTrending = useRef(null);
     const slider = useRef(null);
 
     const [apiData, setApiData] = useState([]);
-    const [apiDataUpcoming, setApiDataUpcoming] = useState([]);
-    const [apiDataTrending, setApiDataTrending] = useState([]);
 
     useEffect(() => {
         const options = {
@@ -49,65 +35,33 @@ function Movies() {
             })
     }, [])
 
-    useEffect(() => {
-        const options = {
-            method: 'GET',
-            headers: {
-              accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNmIyY2NmMjI4NDQ0ODhjODZiZWNhZDcwMWUxYjA3MyIsInN1YiI6IjY1MjU2ZTljZDM5OWU2MDBlMzYzOTMzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GosODVNNRnpI0fhbwnCyql3eDr46YYI1_1KX6KtEuYg'
-            }
-          };
-          
-          fetch('https://api.themoviedb.org/3/movie/upcoming', options)
-            .then(response => response.json())
-            .then((response) => {
-                setApiDataUpcoming(response.results);
-            })
-    }, [])
-
-    useEffect(() => {
-        const options = {
-            method: 'GET',
-            headers: {
-              accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNmIyY2NmMjI4NDQ0ODhjODZiZWNhZDcwMWUxYjA3MyIsInN1YiI6IjY1MjU2ZTljZDM5OWU2MDBlMzYzOTMzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GosODVNNRnpI0fhbwnCyql3eDr46YYI1_1KX6KtEuYg'
-            }
-          };
-          
-          fetch('https://api.themoviedb.org/3/trending/all/day', options)
-            .then(response => response.json())
-            .then((response) => {
-                setApiDataTrending(response.results);
-            })
-    }, [])
-
     const handleMatch = (id) => {
-            const target = apiData.find((t) => t.id === id);
-            displayImage.current.style.opacity = '0';
+        const target = apiData.find((t) => t.id === id);
+        displayImage.current.style.opacity = '0';
+        setTimeout(() => {
+            displayImage.current.style.background = `url('https://image.tmdb.org/t/p/w185${target.backdrop_path}') no-repeat`;
+            displayImage.current.style.backgroundSize = '100%';
+            displayImage.current.style.backgroundPosition = 'center';
+            displayImage.current.style.opacity = '1';
+        }, 300);
+        movieTitle.current.style.opacity = '0';
+        setTimeout(() => {
+            movieTitle.current.textContent = `${target.name}`;
+            movieTitle.current.style.opacity = '1';
+        }, 300);
+        movieDescription.current.style.opacity = '0';
+        if (target.overview === '') {
             setTimeout(() => {
-                displayImage.current.style.background = `url('https://image.tmdb.org/t/p/w185${target.backdrop_path}') no-repeat`;
-                displayImage.current.style.backgroundSize = '100%';
-                displayImage.current.style.backgroundPosition = 'center';
-                displayImage.current.style.opacity = '1';
+                movieDescription.current.textContent = `No description...`;
+                movieDescription.current.style.opacity = '1';
             }, 300);
-            movieTitle.current.style.opacity = '0';
+        }else {
             setTimeout(() => {
-                movieTitle.current.textContent = `${target.name}`;
-                movieTitle.current.style.opacity = '1';
+                movieDescription.current.textContent = `${target.overview}`;
+                movieDescription.current.style.opacity = '1';
             }, 300);
-            movieDescription.current.style.opacity = '0';
-            if (target.overview === '') {
-                setTimeout(() => {
-                    movieDescription.current.textContent = `No description...`;
-                    movieDescription.current.style.opacity = '1';
-                }, 300);
-            }else {
-                setTimeout(() => {
-                    movieDescription.current.textContent = `${target.overview}`;
-                    movieDescription.current.style.opacity = '1';
-                }, 300);
-            }
-            slider.current.style.overflow = 'visible';
+        }
+        slider.current.style.overflow = 'visible';
     }
 
     const indicatorRight = () => {
@@ -126,8 +80,7 @@ function Movies() {
         indContainer.childNodes[indicator].style.backgroundColor = '#fff';
     }
 
-    const handleNext = (event) => {
-        event.stopPropagation();
+    const handleNext = () => {
         if (transform > -1300) {
             transform += -100;
         }else {
@@ -141,8 +94,7 @@ function Movies() {
         indicatorRight();
     }
 
-    const handlePrevious = (event) => {
-        event.stopPropagation();
+    const handlePrevious = () => {
         if (transform < -100) {
             transform += 100;
         }else {
@@ -154,67 +106,6 @@ function Movies() {
             btn.style.transform = `translateX(${transform}%)`;
         })
         indicatorLeft();
-    }
-
-    const handleNextUpcoming = (event) => {
-        event.stopPropagation();
-        if (transformUpcoming > -1300) {
-            transformUpcoming += -100;
-        }else {
-            transformUpcoming += -100;
-            nextBtnUpcoming.current.style.display = 'none';
-        }
-        previousBtnUpcoming.current.style.display = 'block';
-        movieBtnUpcoming.forEach((b) => {
-            b.style.transform = `translateX(${transformUpcoming}%)`;
-        })
-    };
-
-    const handlePreviousUpcoming = (event) => {
-        event.stopPropagation();
-        if (transformUpcoming < -100) {
-            transformUpcoming += 100;
-        }else {
-            transformUpcoming += 100;
-            previousBtnUpcoming.current.style.display = 'none';
-        }
-        nextBtnUpcoming.current.style.display = 'block';
-        movieBtnUpcoming.forEach((b) => {
-            b.style.transform = `translateX(${transformUpcoming}%)`;
-        })
-    };
-
-    const handleNextTrending = (event) => {
-        event.stopPropagation();
-        if (transformTrending > -1300) {
-            transformTrending += -100;
-        }else {
-            transformTrending += -100;
-            nextBtnTrending.current.style.display = 'none';
-        }
-        previousBtnTrending.current.style.display = 'block';
-        movieBtnTrending.forEach((b) => {
-            b.style.transform = `translateX(${transformTrending}%)`;
-        })
-    };
-
-    const handlePreviousTrending = (event) => {
-        event.stopPropagation();
-        if (transformTrending < -100) {
-            transformTrending += 100;
-        }else {
-            transformTrending += 100;
-            previousBtnTrending.current.style.display = 'none';
-        }
-        nextBtnTrending.current.style.display = 'block';
-        movieBtnTrending.forEach((b) => {
-            b.style.transform = `translateX(${transformTrending}%)`;
-        })
-    };
-
-    const handleTarU = (id) => {
-        const tarU = apiDataUpcoming.find((x) => x.id === id);
-        setGotU(tarU);
     }
 
     return(
@@ -271,44 +162,6 @@ function Movies() {
                     apiData.map((x) => (
                         <button onClick={() => handleMatch(x.id)} className="movie-btn">
                             <img src={`https://image.tmdb.org/t/p/w185${x.backdrop_path}`} alt={x.name} />
-                        </button>
-                    ))
-                }
-            </div>
-
-            <p className='upcoming'>Upcoming</p>
-            <div className="slider-upcoming">
-                <button ref={previousBtnUpcoming} className="prev-btn" onClick={handlePreviousUpcoming}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
-                </button>
-                <button ref={nextBtnUpcoming} className="next-btn" onClick={handleNextUpcoming}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
-                </button>
-
-                {
-                    apiDataUpcoming.map((u) => (
-                        <Link to='/moviepage'>
-                            <button className="movie-btn-upcoming" onClick={() => handleTarU(u.id)}>
-                                <img src={`https://image.tmdb.org/t/p/w185${u.backdrop_path}`} alt={u.title} />
-                            </button>
-                        </Link>
-                    ))
-                }
-            </div>
-
-            <p className='trending'>Trending</p>
-            <div className="slider-upcoming">
-                <button ref={previousBtnTrending} className="prev-btn" onClick={handlePreviousTrending}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
-                </button>
-                <button ref={nextBtnTrending} className="next-btn" onClick={handleNextTrending}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
-                </button>
-
-                {
-                    apiDataTrending.map((t) => (
-                        <button className="movie-btn-trending">
-                            <img src={`https://image.tmdb.org/t/p/w185${t.backdrop_path}`} alt={t.title} />
                         </button>
                     ))
                 }

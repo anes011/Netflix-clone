@@ -11,3 +11,13 @@
 body {
   background-color: #131313;
 }
+
+body::-webkit-scrollbar {
+  width: 3px;
+  background-color: rgb(112, 112, 112);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(34, 34, 34);
+  border-radius: 20px;
+}

@@ -1,0 +1,29 @@
+.slider-upcoming {
+    height: 120px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    gap: 2px;
+    margin-left: 5rem;
+}
+
+.movie-btn-upcoming {
+    height: 100%;
+    width: 213px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: all .3s ease;
+}
+
+.movie-btn-upcoming img {
+    height: 100%;
+}
+
+.upcoming {
+    margin-top: 1rem;
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 1rem;
+    margin-left: 5rem;
+}
