@@ -50,6 +50,10 @@
     transform: scale(2);
 }
 
+.play-btn-anchor {
+    text-decoration: none;
+}
+
 .description-container {
     color: #fff;
     font-size: 1.2rem;

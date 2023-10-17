@@ -5,7 +5,7 @@ import '../styles/trending.css';
 
 function TrendingSlider() {
 
-    const { setTarTrending } = useContext(movieData);
+    const { setTarget } = useContext(movieData);
 
     const movieBtnTrending = document.querySelectorAll('.movie-btn-trending');
 
@@ -62,7 +62,7 @@ function TrendingSlider() {
 
     const handleTargetTrending = (id) => {
         const targetTrending = apiDataTrending.find((t) => t.id === id);
-        setTarTrending(targetTrending);
+        setTarget(targetTrending);
     };
 
     return(
@@ -80,7 +80,7 @@ function TrendingSlider() {
                     apiDataTrending.map((t) => (
                         <Link to='/moviepage'>
                             <button onClick={() => handleTargetTrending(t.id)} className="movie-btn-trending">
-                                <img src={`https://image.tmdb.org/t/p/w185${t.backdrop_path}`} alt={t.title} />
+                                <img src={`https://image.tmdb.org/t/p/w500${t.backdrop_path}`} alt={t.title} />
                             </button>
                         </Link>
                     ))

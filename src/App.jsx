@@ -7,11 +7,10 @@ import { useState } from 'react';
 
 function App() {
 
-  const [tarUpcoming, setTarUpcoming] = useState(null);
-  const [tarTrending, setTarTrending] = useState(null);
+  const [target, setTarget] = useState(null);
 
   return (
-    <movieData.Provider value={{ tarUpcoming, setTarUpcoming, tarTrending, setTarTrending }}>
+    <movieData.Provider value={{ target, setTarget }}>
       <div className="app">
         <Router>
           <Routes>

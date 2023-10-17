@@ -1,7 +1,11 @@
 import '../styles/movies.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
+import movieData from '../Context';
+import { Link } from 'react-router-dom';
 
 function Movies() {
+    
+    const { setTarget } = useContext(movieData);
 
     const movieBtn = document.querySelectorAll('.movie-btn');
     const indContainer = document.querySelector('.indicator-container');
@@ -39,7 +43,7 @@ function Movies() {
         const target = apiData.find((t) => t.id === id);
         displayImage.current.style.opacity = '0';
         setTimeout(() => {
-            displayImage.current.style.background = `url('https://image.tmdb.org/t/p/w185${target.backdrop_path}') no-repeat`;
+            displayImage.current.style.background = `url('https://image.tmdb.org/t/p/w500${target.backdrop_path}') no-repeat`;
             displayImage.current.style.backgroundSize = '100%';
             displayImage.current.style.backgroundPosition = 'center';
             displayImage.current.style.opacity = '1';
@@ -114,12 +118,14 @@ function Movies() {
                 <div className="container">
                     <div ref={movieTitle} className="movie-title">MONEY HEIST</div>
                     <div className="buttons-container">
-                        <button className="play-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
-                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
-                            </svg>
-                            <p>Play</p>
-                        </button>
+                        <Link to='/moviepage' className='play-btn-anchor'>
+                            <button className="play-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                </svg>
+                                <p>Play</p>
+                            </button>
+                        </Link>
                         <button className="mylist-btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -161,7 +167,7 @@ function Movies() {
                 {
                     apiData.map((x) => (
                         <button onClick={() => handleMatch(x.id)} className="movie-btn">
-                            <img src={`https://image.tmdb.org/t/p/w185${x.backdrop_path}`} alt={x.name} />
+                            <img src={`https://image.tmdb.org/t/p/w500${x.backdrop_path}`} alt={x.name} />
                         </button>
                     ))
                 }

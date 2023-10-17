@@ -5,7 +5,7 @@ import movieData from '../Context';
 
 function MovieDetails() {
 
-    const { tarUpcoming, setTarUpcoming, tarTrending, setTarTrending } = useContext(movieData);
+    const { target } = useContext(movieData);
 
     const detailsCont = useRef(null);
     const movieName = useRef(null);
@@ -13,27 +13,20 @@ function MovieDetails() {
     const movieDescription = useRef(null);
 
     useEffect(() => {
-        if (tarUpcoming !== null) {
-            detailsCont.current.style.background = `url('https://image.tmdb.org/t/p/w185${tarUpcoming.backdrop_path}') no-repeat`;
+        if (target !== null) {
+            detailsCont.current.style.background = `url('https://image.tmdb.org/t/p/w500${target.backdrop_path}') no-repeat`;
             detailsCont.current.style.backgroundSize = '100%';
             detailsCont.current.style.backgroundPosition = 'center';
-            movieName.current.textContent = `${tarUpcoming.title}`;
-            date.current.textContent = `${tarUpcoming.release_date}`;
-            movieDescription.current.textContent = `${tarUpcoming.overview}`;
-        }else if (tarTrending !== null) {
-            detailsCont.current.style.background = `url('https://image.tmdb.org/t/p/w185${tarTrending.backdrop_path}') no-repeat`;
-            detailsCont.current.style.backgroundSize = '100%';
-            detailsCont.current.style.backgroundPosition = 'center';
-            switch(tarTrending.name) {
+            switch(target.name) {
                 case(undefined):
-                    movieName.current.textContent = `${tarTrending.title}`;
+                    movieName.current.textContent = `${target.title}`;
                 break;
                 default:
-                    movieName.current.textContent = `${tarTrending.name}`;
+                    movieName.current.textContent = `${target.name}`;
                 break;
             }
-            tarTrending.release_date === undefined ? date.current.textContent = 'Release Date: ???' : date.current.textContent = `${tarTrending.release_date}`;
-            movieDescription.current.textContent = `${tarTrending.overview}`;
+            target.release_date === undefined ? date.current.textContent = 'Release Date: ???' : date.current.textContent = `${target.release_date}`;
+            movieDescription.current.textContent = `${target.overview}`;
         }else {
             detailsCont.current.style.background = `url('https://occ-0-2774-2706.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABXL0PAHi9-XtMSG8x85X0LHGqOlF4tV7IwnYrI4Xrt0mBekaVkW-s7lAzgobnuOKG8agF05fG9X3HoVvu6CS50ESKi97n1hzLHhh.jpg?r=945') no-repeat`;
             detailsCont.current.style.backgroundSize = '100%';

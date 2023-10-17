@@ -5,7 +5,7 @@ import '../styles/upcoming.css';
 
 function UpcomingSlider() {
 
-    const { setTarUpcoming } = useContext(movieData);
+    const { setTarget } = useContext(movieData);
 
     const movieBtnUpcoming = document.querySelectorAll('.movie-btn-upcoming');
 
@@ -62,7 +62,7 @@ function UpcomingSlider() {
 
     const handleTargetUpcoming = (id) => {
         const targetUpcoming = apiDataUpcoming.find((u) => u.id === id);
-        setTarUpcoming(targetUpcoming);
+        setTarget(targetUpcoming);
     }
     return(
         <div className="upcoming-slider">
@@ -79,7 +79,7 @@ function UpcomingSlider() {
                     apiDataUpcoming.map((u) => (
                         <Link to='/moviepage'>
                             <button className="movie-btn-upcoming" onClick={() => handleTargetUpcoming(u.id)}>
-                                <img src={`https://image.tmdb.org/t/p/w185${u.backdrop_path}`} alt={u.title} />
+                                <img src={`https://image.tmdb.org/t/p/w500${u.backdrop_path}`} alt={u.title} />
                             </button>
                         </Link>
                     ))
