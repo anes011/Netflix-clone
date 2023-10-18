@@ -4,15 +4,13 @@ import movieData from '../Context';
 import { Link } from 'react-router-dom';
 
 function Movies() {
-    
-    const { setTarget } = useContext(movieData);
 
     const movieBtn = document.querySelectorAll('.movie-btn');
     const indContainer = document.querySelector('.indicator-container');
     const ind = document.querySelectorAll('.ind');
 
-    let transform = 0;
     let indicator = 0;
+    let transform = 0;
 
     const displayImage = useRef(null);
     const movieTitle = useRef(null);
@@ -65,7 +63,6 @@ function Movies() {
                 movieDescription.current.style.opacity = '1';
             }, 300);
         }
-        slider.current.style.overflow = 'visible';
     }
 
     const indicatorRight = () => {

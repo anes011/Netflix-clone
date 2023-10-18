@@ -1,13 +1,16 @@
 import '../styles/nav.css';
 import NetflixLogo from '../images & logos/Netflix_Logo_RGB.png';
 import ProfileLogo from '../images & logos/Netflix-avatar.png';
+import { Link } from 'react-router-dom';
 
 function Nav() {
     return(
         <div className="nav">
             <div className="right-section">
                 <img className='netflix-logo' src={NetflixLogo} alt="Netflix logo" />
-                <button className="home-btn">Home</button>
+                <Link to='/'>
+                    <button className="home-btn">Home</button>
+                </Link>
                 <button className="tv-shows-btn">TV Shows</button>
                 <button className="movies">Movies</button>
                 <button className="recently-added">Recently Added</button>
