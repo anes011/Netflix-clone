@@ -26,7 +26,7 @@ function MovieDetails() {
                 break;
             }
             target.release_date === undefined ? date.current.textContent = 'Release Date: ???' : date.current.textContent = `${target.release_date}`;
-            movieDescription.current.textContent = `${target.overview}`;
+            target.overview === '' ? movieDescription.current.textContent = 'No description provided...' : movieDescription.current.textContent = `${target.overview}`;
         }else {
             detailsCont.current.style.background = `url('https://occ-0-2774-2706.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABXL0PAHi9-XtMSG8x85X0LHGqOlF4tV7IwnYrI4Xrt0mBekaVkW-s7lAzgobnuOKG8agF05fG9X3HoVvu6CS50ESKi97n1hzLHhh.jpg?r=945') no-repeat`;
             detailsCont.current.style.backgroundSize = '100%';

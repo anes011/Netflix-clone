@@ -5,21 +5,24 @@ import { Link } from 'react-router-dom';
 
 function Movies() {
 
+    let { setTarget } = useContext(movieData);
+
     const movieBtn = document.querySelectorAll('.movie-btn');
     const indContainer = document.querySelector('.indicator-container');
     const ind = document.querySelectorAll('.ind');
-
-    let indicator = 0;
-    let transform = 0;
+    const slider = document.querySelector('.slider');
 
     const displayImage = useRef(null);
     const movieTitle = useRef(null);
     const movieDescription = useRef(null);
     const nextBtn = useRef(null);
     const previousBtn = useRef(null);
-    const slider = useRef(null);
 
     const [apiData, setApiData] = useState([]);
+    const [transform, setTransform] = useState(0);
+    const [indicator, setIndicator] = useState(0);
+    const [movieWidth, setMovieWidth] = useState(null);
+    const [movieAmount, setMovieAmount] = useState(null);
 
     useEffect(() => {
         const options = {
@@ -63,51 +66,54 @@ function Movies() {
                 movieDescription.current.style.opacity = '1';
             }, 300);
         }
+        setTarget(target);
     }
 
-    const indicatorRight = () => {
-        indicator++;
-        ind.forEach((i) => {
-            i.style.backgroundColor = 'gray';
-        })
-        indContainer.childNodes[indicator].style.backgroundColor = '#fff';
-    }
+    useEffect(() => {
+        if (slider) {
+            setMovieWidth(slider.childNodes[2].offsetWidth);
+            setMovieAmount((slider.children.length - 2) / 5);
+        }
+    })
 
-    const indicatorLeft = () => {
-        indicator--;
-        ind.forEach((i) => {
-            i.style.backgroundColor = 'gray';
-        })
-        indContainer.childNodes[indicator].style.backgroundColor = '#fff';
-    }
+    useEffect(() => {
+        for (let i = 0; i < movieAmount; i++) {
+            const ind = document.createElement('div');
+            ind.classList.add('ind');
+            indContainer.append(ind);
+        }
+    }, []);
 
     const handleNext = () => {
-        if (transform > -1300) {
-            transform += -100;
-        }else {
-            transform += -100;
-            nextBtn.current.style.display = 'none';
-        }
+        setTransform(transform - (movieWidth * 5));
+        setIndicator(indicator + 1);
         previousBtn.current.style.display = 'block';
-        movieBtn.forEach((btn) => {
-            btn.style.transform = `translateX(${transform}%)`;
-        })
-        indicatorRight();
     }
 
     const handlePrevious = () => {
-        if (transform < -100) {
-            transform += 100;
-        }else {
-            transform += 100;
-            previousBtn.current.style.display = 'none';
-        }
+        setTransform(transform + (movieWidth * 5));
+        setIndicator(indicator - 1);
         nextBtn.current.style.display = 'block';
-        movieBtn.forEach((btn) => {
-            btn.style.transform = `translateX(${transform}%)`;
-        })
-        indicatorLeft();
     }
+
+    movieBtn.forEach((btn) => {
+        btn.style.transform = `translateX(${transform}px)`;
+    })
+
+    useEffect(() => {
+        if (transform === 0) {
+            previousBtn.current.style.display = 'none';
+        }else if (transform === -4500) {
+            nextBtn.current.style.display = 'none';
+        }
+        
+        ind.forEach((i) => {
+            i.style.backgroundColor = 'gray';
+        })
+        // if (indContainer) {
+        //     indContainer.childNodes[indicator].style.backgroundColor = '#fff';
+        // };
+    });
 
     return(
         <div className="movies">
@@ -135,7 +141,10 @@ function Movies() {
                 <div className="type-indicator-container">
                     <p>Popular</p>
                     <div className="indicator-container">
-                        <div className="ind" style={{backgroundColor: '#fff'}}></div>
+                        {
+                            
+                        }
+                        {/* <div className="ind" style={{backgroundColor: '#fff'}}></div>
                         <div className="ind"></div>
                         <div className="ind"></div>
                         <div className="ind"></div>
@@ -149,11 +158,11 @@ function Movies() {
                         <div className="ind"></div>
                         <div className="ind"></div>
                         <div className="ind"></div>
-                        <div className="ind"></div>
+                        <div className="ind"></div> */}
                     </div>
                 </div>
             </div>
-            <div ref={slider} className="slider">
+            <div className="slider">
                 <button ref={previousBtn} className="prev-btn" onClick={handlePrevious}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" fill='#fff'></path></svg>
                 </button>
