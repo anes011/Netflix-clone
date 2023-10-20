@@ -23,6 +23,7 @@ function Movies() {
     const [indicator, setIndicator] = useState(0);
     const [movieWidth, setMovieWidth] = useState(null);
     const [movieAmount, setMovieAmount] = useState(null);
+    const [apiReady, setApiReady] = useState(false);
 
     useEffect(() => {
         const options = {
@@ -37,6 +38,7 @@ function Movies() {
             .then(response => response.json())
             .then((response) => {
                 setApiData(response.results);
+                setApiReady(true);
             })
     }, [])
 
@@ -70,14 +72,14 @@ function Movies() {
     }
 
     useEffect(() => {
-        if (slider) {
+        if (slider && apiReady === true) {
             setMovieWidth(slider.childNodes[2].offsetWidth);
-            setMovieAmount((slider.children.length - 2) / 5);
+            setMovieAmount((slider.children.length - 2));
         }
     })
 
     useEffect(() => {
-        for (let i = 0; i < movieAmount; i++) {
+        for (let i = 0; i < (movieAmount - 3); i++) {
             const ind = document.createElement('div');
             ind.classList.add('ind');
             indContainer.append(ind);
@@ -85,13 +87,13 @@ function Movies() {
     }, []);
 
     const handleNext = () => {
-        setTransform(transform - (movieWidth * 5));
+        setTransform(transform - (movieWidth));
         setIndicator(indicator + 1);
         previousBtn.current.style.display = 'block';
     }
 
     const handlePrevious = () => {
-        setTransform(transform + (movieWidth * 5));
+        setTransform(transform + (movieWidth));
         setIndicator(indicator - 1);
         nextBtn.current.style.display = 'block';
     }
@@ -100,19 +102,23 @@ function Movies() {
         btn.style.transform = `translateX(${transform}px)`;
     })
 
+    const endPoint = (movieAmount * 300) - 1200;
+
     useEffect(() => {
         if (transform === 0) {
             previousBtn.current.style.display = 'none';
-        }else if (transform === -4500) {
+        }else if (transform === -endPoint) {
             nextBtn.current.style.display = 'none';
         }
-        
+
+            
         ind.forEach((i) => {
             i.style.backgroundColor = 'gray';
         })
+        
         // if (indContainer) {
         //     indContainer.childNodes[indicator].style.backgroundColor = '#fff';
-        // };
+        // }
     });
 
     return(
@@ -140,26 +146,7 @@ function Movies() {
                 </div>
                 <div className="type-indicator-container">
                     <p>Popular</p>
-                    <div className="indicator-container">
-                        {
-                            
-                        }
-                        {/* <div className="ind" style={{backgroundColor: '#fff'}}></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div>
-                        <div className="ind"></div> */}
-                    </div>
+                    <div className="indicator-container"></div>
                 </div>
             </div>
             <div className="slider">
