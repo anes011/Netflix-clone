@@ -3,7 +3,7 @@
 }
 
 .display {
-    height: 700px;
+    height: 500px;
     background: url('https://wallpapercave.com/wp/wp6581266.jpg') no-repeat;
     background-size: 100%;
     background-position: top;
@@ -21,7 +21,7 @@
     font-size: 4rem;
     font-weight: 600;
     width: 250px;
-    margin-top: 12rem;
+    margin-top: 7rem;
     transition: all .3s ease;
 }
 
@@ -136,6 +136,11 @@
 .indicator-container .ind {
     height: 2px;
     width: 20px;
-    background-color: rgb(83, 83, 83);
     position: relative;
+}
+
+@media (max-width: 890px) {
+    .display {
+        background-size: 100% 100%;
+    }
 }

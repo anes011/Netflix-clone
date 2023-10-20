@@ -9,7 +9,6 @@ function Movies() {
 
     const movieBtn = document.querySelectorAll('.movie-btn');
     const indContainer = document.querySelector('.indicator-container');
-    const ind = document.querySelectorAll('.ind');
     const slider = document.querySelector('.slider');
 
     const displayImage = useRef(null);
@@ -23,7 +22,6 @@ function Movies() {
     const [indicator, setIndicator] = useState(0);
     const [movieWidth, setMovieWidth] = useState(null);
     const [movieAmount, setMovieAmount] = useState(null);
-    const [apiReady, setApiReady] = useState(false);
 
     useEffect(() => {
         const options = {
@@ -38,7 +36,6 @@ function Movies() {
             .then(response => response.json())
             .then((response) => {
                 setApiData(response.results);
-                setApiReady(true);
             })
     }, [])
 
@@ -72,19 +69,11 @@ function Movies() {
     }
 
     useEffect(() => {
-        if (slider && apiReady === true) {
+        if (slider) {
             setMovieWidth(slider.childNodes[2].offsetWidth);
             setMovieAmount((slider.children.length - 2));
         }
-    })
-
-    useEffect(() => {
-        for (let i = 0; i < (movieAmount - 3); i++) {
-            const ind = document.createElement('div');
-            ind.classList.add('ind');
-            indContainer.append(ind);
-        }
-    }, []);
+    });
 
     const handleNext = () => {
         setTransform(transform - (movieWidth));
@@ -110,16 +99,23 @@ function Movies() {
         }else if (transform === -endPoint) {
             nextBtn.current.style.display = 'none';
         }
-
-            
-        ind.forEach((i) => {
-            i.style.backgroundColor = 'gray';
-        })
-        
-        // if (indContainer) {
-        //     indContainer.childNodes[indicator].style.backgroundColor = '#fff';
-        // }
     });
+
+    useEffect(() => {
+        for (let i = 0; i < (movieAmount - 3); i++) {
+            const ind = document.createElement('div');
+            ind.classList.add('ind');
+            indContainer.append(ind);
+        }
+    }, [movieAmount]);
+
+    if (indContainer && indContainer.childNodes[indicator]) {
+        const ind = document.querySelectorAll('.ind');
+        ind.forEach((i) => {
+            i.style.backgroundColor = 'rgb(35, 35, 35)';
+        })
+        indContainer.childNodes[indicator].style.backgroundColor = '#fff';
+    };
 
     return(
         <div className="movies">
