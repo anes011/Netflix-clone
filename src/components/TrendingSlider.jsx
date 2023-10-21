@@ -80,7 +80,7 @@ function TrendingSlider() {
                     apiDataTrending.map((t) => (
                         <Link to='/moviepage'>
                             <button onClick={() => handleTargetTrending(t.id)} className="movie-btn-trending">
-                                <img src={`https://image.tmdb.org/t/p/w500${t.backdrop_path}`} alt={t.title} />
+                                <img src={`https://image.tmdb.org/t/p/w500/${t.backdrop_path}`} alt={t.title} />
                             </button>
                         </Link>
                     ))

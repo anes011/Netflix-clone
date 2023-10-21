@@ -14,7 +14,7 @@ function MovieDetails() {
 
     useEffect(() => {
         if (target !== null) {
-            detailsCont.current.style.background = `url('https://image.tmdb.org/t/p/w500${target.backdrop_path}') no-repeat`;
+            detailsCont.current.style.background = `url('https://image.tmdb.org/t/p/original/${target.backdrop_path}') no-repeat`;
             detailsCont.current.style.backgroundSize = '100%';
             detailsCont.current.style.backgroundPosition = 'center';
             switch(target.name) {

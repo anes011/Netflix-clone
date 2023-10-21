@@ -43,7 +43,7 @@ function Movies() {
         const target = apiData.find((t) => t.id === id);
         displayImage.current.style.opacity = '0';
         setTimeout(() => {
-            displayImage.current.style.background = `url('https://image.tmdb.org/t/p/w500${target.backdrop_path}') no-repeat`;
+            displayImage.current.style.background = `url('https://image.tmdb.org/t/p/original/${target.backdrop_path}') no-repeat`;
             displayImage.current.style.backgroundSize = '100%';
             displayImage.current.style.backgroundPosition = 'center';
             displayImage.current.style.opacity = '1';
@@ -156,7 +156,7 @@ function Movies() {
                 {
                     apiData.map((x) => (
                         <button onClick={() => handleMatch(x.id)} className="movie-btn">
-                            <img src={`https://image.tmdb.org/t/p/w500${x.backdrop_path}`} alt={x.name} />
+                            <img src={`https://image.tmdb.org/t/p/w500/${x.backdrop_path}`} alt={x.name} />
                         </button>
                     ))
                 }

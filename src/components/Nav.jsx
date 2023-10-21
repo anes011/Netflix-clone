@@ -2,10 +2,92 @@ import '../styles/nav.css';
 import NetflixLogo from '../images & logos/Netflix_Logo_RGB.png';
 import ProfileLogo from '../images & logos/Netflix-avatar.png';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useRef, useContext } from 'react';
+import movieData from '../Context';
 
 function Nav() {
+
+    const { setInput } = useContext(movieData);
+
+    const nav = useRef(null);
+    const redirect = useNavigate();
+
+    const showSearch = () => {
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+
+        const searchBar = document.createElement('div');
+        searchBar.classList.add('search-bar');
+        
+        const search = document.createElement('input');
+        search.classList.add('search');
+        searchBar.append(search);
+
+        const submitSearchBtn = document.createElement('button');
+        submitSearchBtn.classList.add('submit-search-btn');
+        submitSearchBtn.textContent = 'Search';
+        searchBar.append(submitSearchBtn);
+
+        const x = document.createElement('p');
+        x.classList.add('clear-search');
+        x.textContent = 'X';
+        searchBar.append(x);
+
+        nav.current.append(overlay);
+        nav.current.append(searchBar);
+        
+        setTimeout(() => {
+            overlay.style.opacity = '1';
+        }, 1);
+        
+        setTimeout(() => {
+            searchBar.style.top = '50%';
+        }, 1);
+        
+        search.focus();
+
+        x.addEventListener('click', () => {
+            search.value = '';
+        });
+
+        submitSearchBtn.addEventListener('click', () => {
+            setInput(search.value);
+            redirect('/search');
+
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.remove();
+            }, 500);
+            
+            searchBar.style.top = '-50%';
+            setTimeout(() => {
+                searchBar.remove();
+            }, 500);
+        });
+
+        closeSearch();
+    };
+
+    function closeSearch() {
+        const overlay = document.querySelector('.overlay');
+        const searchBar = document.querySelector('.search-bar');
+
+        overlay.addEventListener('click', () => {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.remove();
+            }, 500);
+            
+            searchBar.style.top = '-50%';
+            setTimeout(() => {
+                searchBar.remove();
+            }, 500);
+        });
+    };
+
     return(
-        <div className="nav">
+        <div ref={nav} className="nav">
             <div className="right-section">
                 <img className='netflix-logo' src={NetflixLogo} alt="Netflix logo" />
                 <Link to='/'>
@@ -18,7 +100,7 @@ function Nav() {
             </div>
 
             <div className="left-side">
-                <button className="search-btn">
+                <button className="search-btn" onClick={showSearch}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>

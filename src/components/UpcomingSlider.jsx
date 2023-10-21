@@ -79,7 +79,7 @@ function UpcomingSlider() {
                     apiDataUpcoming.map((u) => (
                         <Link to='/moviepage'>
                             <button className="movie-btn-upcoming" onClick={() => handleTargetUpcoming(u.id)}>
-                                <img src={`https://image.tmdb.org/t/p/w500${u.backdrop_path}`} alt={u.title} />
+                                <img src={`https://image.tmdb.org/t/p/w500/${u.backdrop_path}`} alt={u.title} />
                             </button>
                         </Link>
                     ))

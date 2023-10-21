@@ -1,0 +1,30 @@
+.search-description {
+    margin-top: 10rem;
+}
+
+.title {
+    color: #fff;
+    margin-left: 30px;
+    margin-bottom: 2rem;
+}
+
+.description {
+    margin-left: 30px;
+    color: #fff;
+    width: 800px;
+}
+
+.search-results {
+    margin-top: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    row-gap: 4rem;
+    justify-content: center;
+}
+
+.movie-result {
+    height: 170px;
+    width: 300px;
+    cursor: pointer;
+}
