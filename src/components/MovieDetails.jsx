@@ -15,7 +15,7 @@ function MovieDetails() {
     useEffect(() => {
         if (target !== null) {
             detailsCont.current.style.background = `url('https://image.tmdb.org/t/p/original/${target.backdrop_path}') no-repeat`;
-            detailsCont.current.style.backgroundSize = '100%';
+            detailsCont.current.style.backgroundSize = '100% 100%';
             detailsCont.current.style.backgroundPosition = 'center';
             switch(target.name) {
                 case(undefined):
@@ -29,7 +29,7 @@ function MovieDetails() {
             target.overview === '' ? movieDescription.current.textContent = 'No description provided...' : movieDescription.current.textContent = `${target.overview}`;
         }else {
             detailsCont.current.style.background = `url('https://occ-0-2774-2706.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABXL0PAHi9-XtMSG8x85X0LHGqOlF4tV7IwnYrI4Xrt0mBekaVkW-s7lAzgobnuOKG8agF05fG9X3HoVvu6CS50ESKi97n1hzLHhh.jpg?r=945') no-repeat`;
-            detailsCont.current.style.backgroundSize = '100%';
+            detailsCont.current.style.backgroundSize = '100% 100%';
             detailsCont.current.style.backgroundPosition = 'center';
         }
     })

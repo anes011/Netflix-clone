@@ -10,9 +10,10 @@ function App() {
 
   const [target, setTarget] = useState(null);
   const [input, setInput] = useState(null);
+  const [infoTarget, setInfoTarget] = useState(null);
 
   return (
-    <movieData.Provider value={{ target, setTarget, input, setInput }}>
+    <movieData.Provider value={{ target, setTarget, input, setInput, infoTarget, setInfoTarget }}>
       <div className="app">
         <Router>
           <Routes>

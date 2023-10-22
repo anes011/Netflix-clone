@@ -144,3 +144,15 @@
         background-size: 100% 100%;
     }
 }
+
+@media (max-width: 700px) {
+    .type-indicator-container p {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .description-container {
+        width: 300px;
+    }
+}

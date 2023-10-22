@@ -44,7 +44,7 @@ function Movies() {
         displayImage.current.style.opacity = '0';
         setTimeout(() => {
             displayImage.current.style.background = `url('https://image.tmdb.org/t/p/original/${target.backdrop_path}') no-repeat`;
-            displayImage.current.style.backgroundSize = '100%';
+            displayImage.current.style.backgroundSize = '100% 100%';
             displayImage.current.style.backgroundPosition = 'center';
             displayImage.current.style.opacity = '1';
         }, 300);

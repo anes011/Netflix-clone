@@ -6,12 +6,40 @@
     color: #fff;
     margin-left: 30px;
     margin-bottom: 2rem;
+    transition: all .5s ease;
+    transform: translateY(50px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.title-active {
+    color: #fff;
+    margin-left: 30px;
+    margin-bottom: 2rem;
+    transition: all .5s ease;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
 }
 
 .description {
     margin-left: 30px;
     color: #fff;
     width: 800px;
+    transition: all .5s ease;
+    transform: translateY(50px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.description-active {
+    margin-left: 30px;
+    color: #fff;
+    width: 50%;
+    transition: all .5s ease;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
 }
 
 .search-results {

@@ -52,18 +52,22 @@ function Nav() {
         });
 
         submitSearchBtn.addEventListener('click', () => {
-            setInput(search.value);
-            redirect('/search');
+            if (search.value === '') {
+                alert('Please type to search!');
+            }else {
+                setInput(search.value);
+                redirect('/search');
 
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.remove();
-            }, 500);
-            
-            searchBar.style.top = '-50%';
-            setTimeout(() => {
-                searchBar.remove();
-            }, 500);
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.remove();
+                }, 500);
+                
+                searchBar.style.top = '-50%';
+                setTimeout(() => {
+                    searchBar.remove();
+                }, 500);
+            }
         });
 
         closeSearch();
